@@ -2,14 +2,14 @@ using UnityEngine;
 
 public class EnemyBehavior : MonoBehaviour
 {
-    [Header("Basic Settings")]
+    //Basic Settings
     public Transform playerTransform;
     public bool isMagnetic = true; // Set True for Swarmer, False for Grunt
 
-    [Header("Movement Settings")]
+    //Movement Settings
     public float moveSpeed = 3.5f;
 
-    [Header("Attack Settings")]
+    //Attack Settings
     public float attackRange = 1.5f;
     public float attackCooldown = 1.2f;
 
@@ -22,7 +22,7 @@ public class EnemyBehavior : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
 
-        // Lock X and Z rotation to keep upright
+        // Keep upright
         if (rb != null)
         {
             rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
@@ -71,18 +71,18 @@ public class EnemyBehavior : MonoBehaviour
     {
         if (playerTransform == null || isKnockedBack) return;
 
-        // 1. Look towards the player
+        // Look towards the player
         Vector3 targetPosition = new Vector3(playerTransform.position.x, transform.position.y, playerTransform.position.z);
         transform.LookAt(targetPosition);
 
-        // 2. Move towards the player using Rigidbody
+        // Move towards the player using Rigidbody
         Vector3 direction = (targetPosition - transform.position).normalized;
         if (rb != null)
         {
             rb.MovePosition(transform.position + direction * moveSpeed * Time.fixedDeltaTime);
         }
 
-        // 3. Attack distance check
+        // Attack distance check
         float distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
         if (distanceToPlayer <= attackRange && attackTimer <= 0)
         {
