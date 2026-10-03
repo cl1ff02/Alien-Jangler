@@ -22,13 +22,13 @@ public class EnemyBehavior : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
 
-        // Freeze X and Z rotation to keep the enemy upright
+        // Lock X and Z rotation to keep upright
         if (rb != null)
         {
             rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
         }
 
-        // Auto-find player via Player / PlayerMovement script or Tag
+        // Auto-locate player by PlayerMovement, Player script, or Tag
         if (playerTransform == null)
         {
             PlayerMovement movementScript = Object.FindFirstObjectByType<PlayerMovement>();
@@ -42,7 +42,7 @@ public class EnemyBehavior : MonoBehaviour
             }
         }
     }
-
+    
     void Update()
     {
         // Handle attack cooldown
