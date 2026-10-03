@@ -2,11 +2,8 @@ using UnityEngine;
 
 public class EnemyBehavior : MonoBehaviour
 {
-    //Basic Settings
     public Transform playerTransform;
     public bool isMagnetic = true; // Set True for Swarmer, False for Grunt
-
-    //Movement Settings
     public float moveSpeed = 3.5f;
 
     //Attack Settings
