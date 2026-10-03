@@ -7,7 +7,7 @@ public class EnemySpawn : MonoBehaviour
 
     [Header("Spawn Settings")]
     public float spawnInterval = 5f;
-    public int packSize = 3; // 3-5 for Swarmers, 1-2 for Grunts
+    public int packSize = 3;
     public float spawnRadius = 2f;
 
     private float timer = 0f;
@@ -19,7 +19,7 @@ public class EnemySpawn : MonoBehaviour
         if (timer >= spawnInterval)
         {
             SpawnPack();
-            timer = 0f; // Reset timer
+            timer = 0f;
         }
     }
 
@@ -29,7 +29,6 @@ public class EnemySpawn : MonoBehaviour
 
         for (int i = 0; i < packSize; i++)
         {
-            // Calculate a random offset around the spawner position
             float randomX = Random.Range(-spawnRadius, spawnRadius);
             float randomZ = Random.Range(-spawnRadius, spawnRadius);
             Vector3 spawnPosition = transform.position + new Vector3(randomX, 0f, randomZ);
