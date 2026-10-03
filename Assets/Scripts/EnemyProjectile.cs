@@ -25,11 +25,10 @@ public class EnemyProjectile : MonoBehaviour
                 }
             }
 
-            Destroy(gameObject); // Destroy the bullet upon hitting player
+            Destroy(gameObject);
         }
         else if (!other.CompareTag("Enemy") && !other.CompareTag("MagnetZone"))
         {
-            // Destroy bullet when hitting walls, obstacles, etc.
             Destroy(gameObject);
         }
     }
