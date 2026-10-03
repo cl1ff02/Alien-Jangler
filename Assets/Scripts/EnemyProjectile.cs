@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class EnemyProjectile : MonoBehaviour
 {
-    [Header("Projectile Settings")]
     public int damage = 1;
     public float lifeTime = 4f;
 
