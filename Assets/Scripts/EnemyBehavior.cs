@@ -11,7 +11,6 @@ public class EnemyBehavior : MonoBehaviour
 
     [Header("Attack Settings")]
     public float attackRange = 1.5f;
-    public int attackDamage = 1;
     public float attackCooldown = 1.2f;
 
     private Rigidbody rb;
@@ -23,28 +22,36 @@ public class EnemyBehavior : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
 
-        // Lock X and Z rotation to prevent the enemy from tipping over
+        // Freeze X and Z rotation to keep the enemy upright
         if (rb != null)
         {
             rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
         }
 
-        // Automatically locate the player in the scene
-        if (playerTransform == null && GameObject.FindGameObjectWithTag("Player") != null)
+        // Auto-find player via Player / PlayerMovement script or Tag
+        if (playerTransform == null)
         {
-            playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+            PlayerMovement movementScript = Object.FindFirstObjectByType<PlayerMovement>();
+            if (movementScript != null)
+            {
+                playerTransform = movementScript.transform;
+            }
+            else if (GameObject.FindGameObjectWithTag("Player") != null)
+            {
+                playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+            }
         }
     }
 
     void Update()
     {
-        // Attack cooldown timer
+        // Handle attack cooldown
         if (attackTimer > 0)
         {
             attackTimer -= Time.deltaTime;
         }
 
-        // Handle knockback / magnetic movement duration
+        // Handle knockback / magnetic duration
         if (isKnockedBack)
         {
             knockbackTimer -= Time.deltaTime;
@@ -53,11 +60,8 @@ public class EnemyBehavior : MonoBehaviour
                 isKnockedBack = false;
                 if (rb != null)
                 {
-
                     rb.linearVelocity = Vector3.zero;
-
                     rb.velocity = Vector3.zero;
-
                 }
             }
         }
@@ -65,51 +69,44 @@ public class EnemyBehavior : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (playerTransform == null) return;
-        if (isKnockedBack) return; // Freeze movement during knockback
+        if (playerTransform == null || isKnockedBack) return;
 
-        // 1. Face towards the player
+        // 1. Look towards the player
         Vector3 targetPosition = new Vector3(playerTransform.position.x, transform.position.y, playerTransform.position.z);
         transform.LookAt(targetPosition);
 
-        // 2. Move towards the player
-        Vector3 direction = (targetPosition - transform.position);
+        // 2. Move towards the player using Rigidbody
+        Vector3 direction = (targetPosition - transform.position).normalized;
         if (rb != null)
         {
-            rb.MovePosition(transform.position + direction.normalized * moveSpeed * Time.fixedDeltaTime);
+            rb.MovePosition(transform.position + direction * moveSpeed * Time.fixedDeltaTime);
         }
 
-        // 3. Attack check
+        // 3. Attack distance check
         float distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
         if (distanceToPlayer <= attackRange && attackTimer <= 0)
         {
-            AttackPlayer();
+            PerformAttack();
             attackTimer = attackCooldown;
         }
     }
 
-    void AttackPlayer()
+    void PerformAttack()
     {
-        Debug.Log(gameObject.name + " attacked the player!");
-
-        // Add player health deduction call here if applicable
+        Debug.Log(gameObject.name + " is attacking the player!");
+        // Additional attack animation or sound logic can be triggered here
     }
 
-    /// <summary>
-    /// Applies force to the enemy when affected by magnet abilities or external physics impulses.
-    /// </summary>
     public void ApplyMagnetForce(Vector3 force, float duration)
     {
-        if (!isMagnetic) return; // Grunts ignore magnetic forces
+        if (!isMagnetic) return; // Grunts ignore magnetic force
 
-        force.y = 0f; // Keep movement on the horizontal plane
+        force.y = 0f; // Constrain force to horizontal plane
 
         if (rb != null)
         {
             rb.linearVelocity = Vector3.zero;
-
             rb.velocity = Vector3.zero;
-
             rb.AddForce(force, ForceMode.Impulse);
         }
 
@@ -117,9 +114,9 @@ public class EnemyBehavior : MonoBehaviour
         knockbackTimer = duration;
     }
 
-    // Automatically detect trigger overlap with magnet zones without editing teammate scripts
     private void OnTriggerEnter(Collider other)
     {
+        // Detects magnetic zone collision without altering teammate code
         if (other.CompareTag("MagnetZone") || other.GetComponent<MagnetBehavior>() != null)
         {
             Vector3 pushDirection = (transform.position - other.transform.position).normalized;
