@@ -2,32 +2,43 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public int enemyHealth;
-    [SerializeField] GameObject player;
+    [Header("Health Settings")]
+    public int enemyHealth = 3;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    [Header("Target Settings")]
+    [SerializeField] private GameObject player;
+
     void Start()
     {
-        if (player == null && GameObject.FindGameObjectWithTag("Player") != null)
+        // Automatically find the player object if not assigned
+        if (player == null)
         {
-            player = GameObject.FindGameObjectWithTag("Player");
+            Player playerScript = Object.FindFirstObjectByType<Player>();
+            if (playerScript != null)
+            {
+                player = playerScript.gameObject;
+            }
+            else if (GameObject.FindGameObjectWithTag("Player") != null)
+            {
+                player = GameObject.FindGameObjectWithTag("Player");
+            }
         }
     }
-    
-    private void OnCollisionEnter(Collision collision)
+
+    public void TakeDamage(int damageAmount)
     {
-        if (collision.gameObject == player)
+        enemyHealth -= damageAmount;
+        Debug.Log(gameObject.name + " Health: " + enemyHealth);
+
+        if (enemyHealth <= 0)
         {
-            if (enemyHealth - 1 != 0)
-            {
-                enemyHealth -= 1;
-            }
-            else
-            {
-                enemyHealth = 0;
-                Destroy(gameObject);
-            }
-            Debug.Log(enemyHealth);
+            Die();
         }
+    }
+
+    private void Die()
+    {
+        Debug.Log(gameObject.name + " has been defeated.");
+        Destroy(gameObject);
     }
 }
