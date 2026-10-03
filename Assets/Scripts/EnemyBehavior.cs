@@ -10,8 +10,11 @@ public class EnemyBehavior : MonoBehaviour
     public float moveSpeed = 3.5f;
 
     //Attack Settings
-    public float attackRange = 1.5f;
-    public float attackCooldown = 1.2f;
+    public float attackRange = 8f;        // Shooting range
+    public float attackCooldown = 1.2f;    // Time between shots
+    public GameObject projectilePrefab;   // Drag projectile prefab here
+    public Transform firePoint;           // Spawn point for the projectile
+    public float projectileSpeed = 10f;   // Speed of the projectile
 
     private Rigidbody rb;
     private float attackTimer = 0f;
@@ -93,7 +96,24 @@ public class EnemyBehavior : MonoBehaviour
 
     void PerformAttack()
     {
-        Debug.Log(gameObject.name + " is attacking the player!");
+        if (projectilePrefab == null)
+        {
+            Debug.LogWarning(gameObject.name + " has no projectilePrefab assigned!");
+            return;
+        }
+
+        // Determine spawn point
+        Vector3 spawnPos = firePoint != null ? firePoint.position : transform.position + transform.forward * 0.8f;
+        
+        // Spawn projectile facing the player
+        GameObject proj = Instantiate(projectilePrefab, spawnPos, transform.rotation);
+        
+        // Give projectile velocity moving forward
+        Rigidbody projRb = proj.GetComponent<Rigidbody>();
+        if (projRb != null)
+        {
+            projRb.velocity = transform.forward * projectileSpeed;
+        }
     }
 
     public void ApplyMagnetForce(Vector3 force, float duration)
