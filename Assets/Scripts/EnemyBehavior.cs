@@ -18,6 +18,8 @@ public class EnemyBehavior : MonoBehaviour
     private float attackTimer = 0f;
     private float knockbackTimer = 0f;
     private bool isKnockedBack = false;
+
+    private MagnetBehavior targetMagnet;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -27,32 +29,39 @@ public class EnemyBehavior : MonoBehaviour
         // Lock rotation so the enemy does not fall over
         rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
 
-        // Find the player automatically
-        if (playerTransform == null && GameObject.FindGameObjectWithTag("Player") != null)
-        {
-            playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-        }
+        targetMagnet = Object.FindFirstObjectByType<MagnetBehavior>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        // Countdown for attack cooldown
-        if (attackTimer > 0)
+        if (targetMagnet != null)
+    {
+        float distance = Vector3.Distance(transform.position, targetMagnet.transform.position);
+        
+        if (distance < 3.0f && !isKnockedBack)
         {
-            attackTimer -= Time.deltaTime;
+            Vector3 pushDirection = (transform.position - targetMagnet.transform.position).normalized;
+            ApplyMagnetForce(pushDirection * 12f, 0.5f);
         }
+    }
+        
+    // Countdown for attack cooldown
+    if (attackTimer > 0)
+    {
+        attackTimer -= Time.deltaTime;
+    }
 
-        // Handle knockback timer
-        if (isKnockedBack)
+    // Handle knockback timer
+    if (isKnockedBack)
+    {
+        knockbackTimer -= Time.deltaTime;
+        if (knockbackTimer <= 0)
         {
-            knockbackTimer -= Time.deltaTime;
-            if (knockbackTimer <= 0)
-            {
-                isKnockedBack = false;
-                rb.linearVelocity = Vector3.zero; // Stop moving after knockback
-            }
+            isKnockedBack = false;
+            rb.linearVelocity = Vector3.zero; // Stop moving after knockback
         }
+    }
     }
 
     void FixedUpdate()
