@@ -38,7 +38,6 @@ public class EnemySpawn : MonoBehaviour
     {
         if (swarmerPrefab == null)
         {
-            Debug.LogWarning("Swarmer Prefab is not assigned in EnemySpawn!");
             return;
         }
 
