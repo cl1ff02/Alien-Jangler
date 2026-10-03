@@ -45,7 +45,7 @@ public class EnemyBehavior : MonoBehaviour
     
     void Update()
     {
-        // Handle attack cooldown
+        // Attack cooldown
         if (attackTimer > 0)
         {
             attackTimer -= Time.deltaTime;
