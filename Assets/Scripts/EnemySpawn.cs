@@ -12,7 +12,6 @@ public class EnemySpawn : MonoBehaviour
 
     private float timer = 0f;
 
-    // Update is called once per frame
     void Update()
     {
         timer += Time.deltaTime;
@@ -30,10 +29,10 @@ public class EnemySpawn : MonoBehaviour
 
         for (int i = 0; i < packSize; i++)
         {
-            // Simple random position around the spawner
+            // Calculate a random offset around the spawner position
             float randomX = Random.Range(-spawnRadius, spawnRadius);
             float randomZ = Random.Range(-spawnRadius, spawnRadius);
-            Vector3 spawnPosition = transform.position + new Vector3(randomX, 0, randomZ);
+            Vector3 spawnPosition = transform.position + new Vector3(randomX, 0f, randomZ);
 
             Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
         }
