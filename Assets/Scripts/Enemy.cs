@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    [Header("Health Settings")]
+    //Health Settings
     public int enemyHealth = 3;
 
-    [Header("Target Settings")]
+    //Target Settings
     [SerializeField] private GameObject player;
 
     void Start()
