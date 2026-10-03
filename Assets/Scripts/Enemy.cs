@@ -13,12 +13,6 @@ public class Enemy : MonoBehaviour
             player = GameObject.FindGameObjectWithTag("Player");
         }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-    
-    }
     
     private void OnCollisionEnter(Collision collision)
     {
