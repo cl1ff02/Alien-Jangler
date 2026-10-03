@@ -7,11 +7,11 @@ public class EnemyBehavior : MonoBehaviour
     public float moveSpeed = 3.5f;
 
     //Attack Settings
-    public float attackRange = 8f;        // Shooting range
-    public float attackCooldown = 1.2f;    // Time between shots
+    public float attackRange = 8f; 
+    public float attackCooldown = 1.2f;  
     public GameObject projectilePrefab;   // Drag projectile prefab here
     public Transform firePoint;           // Spawn point for the projectile
-    public float projectileSpeed = 10f;   // Speed of the projectile
+    public float projectileSpeed = 10f;  
 
     private Rigidbody rb;
     private float attackTimer = 0f;
