@@ -2,15 +2,11 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    //Health Settings
     public int enemyHealth = 3;
-
-    //Target Settings
     [SerializeField] private GameObject player;
 
     void Start()
     {
-        // Automatically find the player object if not assigned
         if (player == null)
         {
             Player playerScript = Object.FindFirstObjectByType<Player>();
