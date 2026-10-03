@@ -94,7 +94,6 @@ public class EnemyBehavior : MonoBehaviour
     void PerformAttack()
     {
         Debug.Log(gameObject.name + " is attacking the player!");
-        // Additional attack animation or sound logic can be triggered here
     }
 
     public void ApplyMagnetForce(Vector3 force, float duration)
@@ -116,7 +115,7 @@ public class EnemyBehavior : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        // Detects magnetic zone collision without altering teammate code
+        // Detects magnetic zone collision
         if (other.CompareTag("MagnetZone") || other.GetComponent<MagnetBehavior>() != null)
         {
             Vector3 pushDirection = (transform.position - other.transform.position).normalized;
