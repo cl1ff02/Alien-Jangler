@@ -25,21 +25,19 @@ public class PlayerMovement : MonoBehaviour
     public void OnMove(InputAction.CallbackContext context)
     {
         moveInput = context.ReadValue<Vector2>();
+        playerAnimScript.ToggleRun(true);
     }
     // Update is called once per frame
     void Update()
     {
         Vector3 move = new Vector3(moveInput.x, 0, moveInput.y);
         controller.Move(move * speed * Time.deltaTime);
-        transform.rotation = Quaternion.LookRotation(move); //object used to constantly rotate after pressing movement, credit to https://www.youtube.com/watch?v=VPfhVWrjktI
+        //transform.rotation = Quaternion.LookRotation(move); //object used to constantly rotate after pressing movement, credit to https://www.youtube.com/watch?v=VPfhVWrjktI
 
-        if (controller.velocity.x > 0 || controller.velocity.y > 0)
-        {
-            playerAnimScript.ToggleRun(true);
-        }
-        else
+        if (controller.velocity.x == 0 && controller.velocity.y == 0)
         {
             playerAnimScript.ToggleRun(false);
         }
+        
     }
 }
