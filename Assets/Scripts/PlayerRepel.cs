@@ -28,15 +28,15 @@ public class PlayerFighting : MonoBehaviour
         //gameObject.transform.position = player.position * distance;
         if (repelAction.IsPressed())
         {
-            playerAnimScript.Repel();
             ApplyForce();
+            playerAnimScript.Repel();
             //playerAnimScript.Repel();
         }
     }
     void ApplyForce()
     {
         rb.AddForce(0, 0, repelStrength, ForceMode.Impulse);
-        
+        Debug.Log($"Force has been applied to: {rb}");
     }
     void OnTriggerStay(Collider other)
     {
