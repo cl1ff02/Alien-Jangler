@@ -10,12 +10,19 @@ public class Combo : MonoBehaviour
     private int attackDamage = 1;
     InputAction attackAction;
     GameObject enemy;
+
+    //Aniamtor
+    [SerializeField] GameObject playerModel;
+    private Animator playerAnim;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         attackAction = InputSystem.actions.FindAction("Attack");
         GameObject.Find("Enemy").GetComponent<Enemy>().damageAmount = attackDamage;
         enemy = GameObject.Find("Enemy");
+
+        playerAnim = playerModel.GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -35,6 +42,24 @@ public class Combo : MonoBehaviour
                 {
                     if (comboCounter + 1 <= 3)
                     {
+                        playerAnim.SetBool("Attacking", true);
+
+                        switch (comboCounter)
+                        {
+                            case 0:
+                                playerAnim.SetTrigger("Attack_1");
+                                break;
+                            case 1:
+                                playerAnim.SetTrigger("Attack_2");
+                                break;
+                            case 2:
+                                playerAnim.SetTrigger("Attack_3");
+                                break;
+
+                             
+
+                        }
+
                         collider.gameObject.GetComponent<Enemy>().TakeDamage(attackDamage);
                         Debug.Log($"Enemy took: {attackDamage} damage!");
                         comboCounter += 1;

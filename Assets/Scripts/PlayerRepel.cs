@@ -7,11 +7,17 @@ public class PlayerFighting : MonoBehaviour
     InputAction repelAction;
     public float repelStrength;
     Rigidbody rb;
+
+    //Aniamtor
+
+    private PlayerAnimatorScript playerAnimScript;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         repelAction = InputSystem.actions.FindAction("Repel");
         GameObject.Find("Enemy").GetComponent<Enemy>().damageAmount = 1;
+
+        playerAnimScript = GetComponent<PlayerAnimatorScript>();
     }
 
     // Update is called once per frame
@@ -21,6 +27,7 @@ public class PlayerFighting : MonoBehaviour
         if (repelAction.IsPressed())
         {
             ApplyForce();
+            playerAnimScript.Repel();
         }
     }
     void ApplyForce()
