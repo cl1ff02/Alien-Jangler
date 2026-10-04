@@ -64,13 +64,13 @@ GameObject:
   - component: {fileID: 5073842533081657765}
   - component: {fileID: 660185240115605406}
   - component: {fileID: 8473353890654547587}
+  - component: {fileID: 3704155356779272901}
   - component: {fileID: 956527301212557446}
   - component: {fileID: 635168519585218270}
   - component: {fileID: 6727774352687281245}
   - component: {fileID: 1432179315353490071}
   - component: {fileID: 7023881651005607179}
   - component: {fileID: 7520861074187151593}
-  - component: {fileID: 3704155356779272901}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -145,6 +145,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 1
+--- !u!114 &3704155356779272901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6701294933044113164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5141fd696dafdd8449bd6e28ec8f7b5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  targetAnimator: {fileID: 5577676760225605891}
 --- !u!114 &956527301212557446
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -298,19 +311,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Combo
   playerModel: {fileID: 5577676760225605891}
---- !u!114 &3704155356779272901
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6701294933044113164}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5141fd696dafdd8449bd6e28ec8f7b5c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  targetAnimator: {fileID: 5577676760225605891}
 --- !u!1001 &4730620911839859794
 PrefabInstance:
   m_ObjectHideFlags: 0

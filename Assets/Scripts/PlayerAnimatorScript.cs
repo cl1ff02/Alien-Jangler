@@ -42,6 +42,7 @@ public class PlayerAnimatorScript : MonoBehaviour
 
     public void Repel()
     {
+        print("repelled");
         playerAnim.SetTrigger("Repel");
     }
 }

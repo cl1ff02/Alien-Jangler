@@ -9,8 +9,9 @@ public class PlayerFighting : MonoBehaviour
     Rigidbody rb;
 
     //Aniamtor
-
+    
     private PlayerAnimatorScript playerAnimScript;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -18,6 +19,7 @@ public class PlayerFighting : MonoBehaviour
         GameObject.Find("Enemy").GetComponent<Enemy>().damageAmount = 1;
 
         playerAnimScript = GetComponent<PlayerAnimatorScript>();
+
     }
 
     // Update is called once per frame
@@ -26,13 +28,15 @@ public class PlayerFighting : MonoBehaviour
         //gameObject.transform.position = player.position * distance;
         if (repelAction.IsPressed())
         {
-            ApplyForce();
             playerAnimScript.Repel();
+            ApplyForce();
+            //playerAnimScript.Repel();
         }
     }
     void ApplyForce()
     {
         rb.AddForce(0, 0, repelStrength, ForceMode.Impulse);
+        
     }
     void OnTriggerStay(Collider other)
     {
