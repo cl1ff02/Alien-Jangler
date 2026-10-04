@@ -61,7 +61,7 @@ public class EnemyBehavior : MonoBehaviour
                 if (rb != null)
                 {
                     rb.linearVelocity = Vector3.zero;
-                    rb.velocity = Vector3.zero;
+                    rb.linearVelocity = Vector3.zero;
                 }
             }
         }
@@ -109,7 +109,7 @@ public class EnemyBehavior : MonoBehaviour
         Rigidbody projRb = proj.GetComponent<Rigidbody>();
         if (projRb != null)
         {
-            projRb.velocity = transform.forward * projectileSpeed;
+            projRb.linearVelocity = transform.forward * projectileSpeed;
         }
     }
 
@@ -122,7 +122,7 @@ public class EnemyBehavior : MonoBehaviour
         if (rb != null)
         {
             rb.linearVelocity = Vector3.zero;
-            rb.velocity = Vector3.zero;
+            rb.linearVelocity = Vector3.zero;
             rb.AddForce(force, ForceMode.Impulse);
         }
 
@@ -133,7 +133,7 @@ public class EnemyBehavior : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         // Detects magnetic zone collision
-        if (other.CompareTag("MagnetZone") || other.GetComponent<MagnetBehavior>() != null)
+        if (other.CompareTag("MagnetZone"))
         {
             Vector3 pushDirection = (transform.position - other.transform.position).normalized;
             ApplyMagnetForce(pushDirection * 10f, 0.5f);

@@ -4,6 +4,7 @@ public class Enemy : MonoBehaviour
 {
     public int enemyHealth = 3;
     [SerializeField] private GameObject player;
+    public int damageAmount = 1;
 
     void Start()
     {
@@ -20,7 +21,19 @@ public class Enemy : MonoBehaviour
             }
         }
     }
+    void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == "Player")
+        {
+            enemyHealth -= damageAmount;
+            Debug.Log(gameObject.name + " Health: " + enemyHealth);
 
+            if (enemyHealth <= 0)
+            {
+                Die();
+            }
+        }        
+    }
     public void TakeDamage(int damageAmount)
     {
         enemyHealth -= damageAmount;
@@ -29,7 +42,7 @@ public class Enemy : MonoBehaviour
         if (enemyHealth <= 0)
         {
             Die();
-        }
+        }     
     }
 
     private void Die()

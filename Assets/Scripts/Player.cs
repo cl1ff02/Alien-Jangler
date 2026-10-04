@@ -3,7 +3,6 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public int playerHealth;
-    [SerializeField] GameObject enemy;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -17,7 +16,7 @@ public class Player : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject == enemy)
+        if (collision.gameObject.tag == "Enemy")
         {
             if (playerHealth - 1 != 0)
             {
